@@ -1,0 +1,7 @@
+{
+  "name": "encodeURL",
+  "author": "txlyre",
+  "description": "Dumb URL encoder/decoder.",
+  "version": "0.1",
+  "dependencies": ["txlyre/toBase"]
+}
