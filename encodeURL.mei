@@ -1,0 +1,18 @@
+%include "txlyre.toBase/toBase"
+
+encodeURL :: string -> string
+encodeURL s = encodeURL' s ""
+where
+  encodeURL' "" b     = b
+  encodeURL' (c:cs) b = if isAlpha? c || isDigit? c then
+                          encodeURL' cs (b<:c)
+                        else
+                          encodeURL' cs ((b<:'%') ++ (toUpper! $ toAlphaDigits $ toBase 16 $ charCode? c))
+
+decodeURL :: string -> string
+decodeURL s = decodeURL' s ""
+where
+  decodeURL' "" b           = b
+  decodeURL' ('+':cs) b     = decodeURL' cs (b<:' ')
+  decodeURL' ('%':h:l:cs) b = decodeURL' cs (b<:(fromCharCode $ fromBase 16 $ fromAlphaDigits [h, l]))
+  decodeURL' (c:cs) b       = decodeURL' cs (b<:c)
